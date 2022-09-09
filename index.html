@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Kusa A4</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			line-height: 1;
+		}
+
+		body {
+			width: 297mm;
+			height: 200mm;
+			padding: 0 3mm;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+			color: #000;
+			background: #fff;
+		}
+
+		.header {
+			display: flex;
+			align-items: flex-end;
+			margin: 1rem 0 3rem;
+		}
+
+		.title {
+			flex: 1;
+			display: flex;
+			padding: 0 8rem 0 0;
+			font-size: 150%;
+			font-weight: 700;
+		}
+
+		.input {
+			flex: 1;
+			margin-left: .33em;
+			border-bottom: solid .2px;
+		}
+
+		.field {
+			margin-left: 1rem;
+		}
+
+		.kusa {
+			fill: #ebedf0;
+		}
+
+		text {
+			font-size: 6px;
+			line-height: 15px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="root"></div>
+	<script src="kusa.js"></script>
+	<script>
+		((root) => {
+			let startDate = (() => {
+				const now = new Date()
+				return new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			})()
+
+			const render = () => {
+				root.innerHTML = ''
+				root.appendChild(renderKusa(startDate, []))
+
+				// SVGをちゃんとレンダリングする
+				root.innerHTML = root.innerHTML + ' '
+			}
+
+			render()
+
+			document.addEventListener('keydown', (event) => {
+				switch (event.key) {
+					case 'h':
+					case 'ArrowLeft':
+						startDate = prevDay(startDate)
+						render()
+						break
+					case 'l':
+					case 'ArrowRight':
+						startDate = nextDay(startDate)
+						render()
+						break
+				}
+			})
+		})(document.getElementById('root'))
+	</script>
+</body>
+
+</html>
